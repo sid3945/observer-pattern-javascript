@@ -3,7 +3,6 @@ class Subject{
         this.observers = {};
     }
 
-    // addObserver(observer) {
     addObserver(eventType, observer, {once = false, priority = 0}={}){
         if(!this.observers[eventType]){
             this.observers[eventType] = [];
@@ -14,12 +13,12 @@ class Subject{
 
     removeObserver(eventType,observer) {
         if(this.observers[eventType]){
-            this.observers[eventType] = this.observers[eventType].filter(obs => obs !== observer);
+            this.observers[eventType] = this.observers[eventType].filter(obs => obs.observer !== observer);
         }
     }
 
     notifyObservers(eventType,data) {
-        this.observers[eventType].forEach(observer => observer.update(data));
+        this.observers[eventType].forEach(obs => obs.observer.update(data));
     }
 
     triggerEvent(eventType, data) {

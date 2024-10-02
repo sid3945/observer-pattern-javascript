@@ -9,7 +9,7 @@ class Observer{
 
     unsubscribe(subject, eventType){
         console.log(`${this.name} has unsubscribed from ${eventType} event.`);
-        this.subject.removeObserver(eventType, this);
+        subject.removeObserver(eventType, this);
     }
 }
 
