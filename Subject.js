@@ -1,23 +1,30 @@
 class Subject{
     constructor(){
-        this.observers = [];
+        this.observers = {};
     }
 
-    addObserver(observer) {
-        this.observers.push(observer);
+    // addObserver(observer) {
+    addObserver(eventType, observer, {once = false, priority = 0}={}){
+        if(!this.observers[eventType]){
+            this.observers[eventType] = [];
+        }
+        this.observers[eventType].push({ observer, once, priority });
+        this.observers[eventType].sort((a, b) => b.priority - a.priority);
     }
 
-    removeObserver(observer) {
-        this.observers = this.observers.filter(obs => obs !== observer);
+    removeObserver(eventType,observer) {
+        if(this.observers[eventType]){
+            this.observers[eventType] = this.observers[eventType].filter(obs => obs !== observer);
+        }
     }
 
-    notifyObservers(data) {
-        this.observers.forEach(observer => observer.update(data));
+    notifyObservers(eventType,data) {
+        this.observers[eventType].forEach(observer => observer.update(data));
     }
 
-    changeState(data) {
-        console.log(`Subject state has changed to: ${data}`);
-        this.notifyObservers(data);
+    triggerEvent(eventType, data) {
+        console.log(`Subject state has changed to: ${data}, for the event ${eventType}`);
+        this.notifyObservers(eventType, data);
     }
 
 }

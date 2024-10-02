@@ -1,17 +1,15 @@
 class Observer{
-    constructor (name, subject){
+    constructor (name){
         this.name = name;
-        this.subject = subject;
-        this.subject.addObserver(this);
     }
 
     update(data){
         console.log(`${this.name} received update with data: ${data}`);
     }
 
-    unsubscribe(){
-        console.log(`${this.name} has unsubscribed.`);
-        this.subject.removeObserver(this);
+    unsubscribe(subject, eventType){
+        console.log(`${this.name} has unsubscribed from ${eventType} event.`);
+        this.subject.removeObserver(eventType, this);
     }
 }
 
